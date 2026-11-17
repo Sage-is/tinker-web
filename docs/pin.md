@@ -25,8 +25,9 @@ make upstream_update && make it_build
 `make upstream_update` fetches upstream, checks out the tip of upstream's branch (or
 `REF=<commit>`), stages it, and adds its row to the table above. Then run the gates in
 `AGENTS.md` and commit the submodule change and this file together. `make it_build`
-refuses to build when `upstream/` is missing or sits at a commit other than the one
-staged.
+refuses to build when `upstream/` is missing, sits at a commit other than the one
+staged, has local changes or stray files, or when the newest row above does not name
+the staged commit.
 
 ## Branches
 

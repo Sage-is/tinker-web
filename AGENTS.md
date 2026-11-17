@@ -14,11 +14,15 @@ This repository packages web Tinker as a container image. It holds no Tinker cod
 
 ## Gates (run before committing)
 
-- `make verify`: the variables, the targets, and `upstream/` at the pinned commit.
+- `make verify`: the variables, the targets, and `upstream/` at the pinned commit,
+  unmodified, named by the newest row of `docs/pin.md`.
 - `make it_build`: the image builds and its labels name the upstream commit and
   `AGPL-3.0-only`.
-- `make it_run it_check invite`: the sign-in page answers on `localhost:8799` and an
-  invite code prints. Then `make it_stop`.
+- `make it_run it_check` then `make invite >/dev/null`: the sign-in page answers, and
+  the codes land in a file in the volume, never in a transcript. Then `make it_stop`.
+  When a `tinker-web` container already runs on the machine (another session's), add
+  `CONTAINER=tinker-web-test PORT=8798 VOLUME=tinker-web-test-data` to every target,
+  so `it_stop` never stops it, and remove that volume afterwards.
 
 ## Rules for this repo
 
@@ -29,6 +33,9 @@ This repository packages web Tinker as a container image. It holds no Tinker cod
   `TENKTS_SERVER_ALLOW=@invalid` (invite codes only).
 - **The pin moves in one commit** with the matching line in `docs/pin.md`;
   `make upstream_update` stages both.
+- **Publishing** is `make it_build_multi_arch_push_GHCR` on the build VM
+  (`DOCKER_CONTEXT=colima-build`), from a clean `vX.Y.Z` tag only. It pushes the version
+  and `:latest` together and checks both carry amd64 and arm64.
 - **Branches.** git-flow-next with the committed `.gitflow`: `develop` for work, `master`
   for releases, tags `vX.Y.Z`. Upstream's branch is whatever `.gitmodules` names; never
   hard-code it elsewhere.

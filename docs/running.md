@@ -40,6 +40,10 @@ docker exec tinker-web tinker-cli invites new --name demo --count 3
 docker exec tinker-web tinker-cli help
 ```
 
+Codes print only once. `make invite` also writes them to
+`/data/invites-<name>-<UTC time>.txt`, readable by `tinker` only, and names that file on
+stderr; `make invite >/dev/null` then keeps the codes off the screen.
+
 ## The model
 
 Web Tinker never holds a provider key. At start it asks a Tinker node for a model
@@ -54,10 +58,16 @@ docker run ... -e TENKTS_WEB_NODE_TOKEN ghcr.io/sage-is/tinker-web:<version>
 
 ## Building
 
-`make it_build` builds for the Docker context in `DOCKER_CONTEXT` (`colima` by default,
-which is Colima's `default` profile) and prints the image's labels. The first build
-compiles the whole release profile (LTO, one codegen unit); later builds reuse a cache
-mount for the registry and `target/`.
+`make it_build` builds with Docker's current context (or `DOCKER_CONTEXT`) for that
+machine's architecture, and prints the image's labels. The tag is the release version
+(`0.1.0`) on a release tag, else the short commit, with `-dirty` when tracked files
+changed. The first build compiles the whole release profile (LTO, one codegen unit);
+later builds reuse a cache mount for the registry and `target/`.
 
-`make it_run`, `make it_check`, `make invite`, `make logs` and `make it_stop` run the
-same container locally.
+`make it_run` starts the last build on this branch and returns once the page answers,
+or fails with the logs after 30 s. `make it_check` checks the page, and when the
+container has a node token, that the node gave it a model. `make invite`, `make logs`
+and `make it_stop` work on the same container.
+
+`make it_build_multi_arch_push_GHCR` publishes `linux/amd64` and `linux/arm64` as the
+version tag and `:latest`, only from a clean `vX.Y.Z` tag, then checks both manifests.
