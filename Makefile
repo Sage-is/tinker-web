@@ -47,6 +47,9 @@ PORT         ?= 8799
 VOLUME       ?= tinker-web-data
 INVITE_NAME  ?= demo
 INVITE_COUNT ?= 3
+# A Docker network to join, e.g. NETWORK=sage-network beside AI-UI, so that
+# TENKTS_WEB_NODE=http://sage-is-ai-ui:8080 resolves.
+NETWORK      ?=
 
 # The image's tag: the git tag without its v (0.1.0, as the formula names it),
 # else the short commit. -dirty when tracked files changed since that commit,
@@ -108,6 +111,7 @@ it_build: require_upstream
 # `make it_run invite` never races the database tinker-cli needs.
 it_run:
 	docker run -d --name $(CONTAINER) --restart unless-stopped \
+		$(if $(NETWORK),--network $(NETWORK)) \
 		-p 127.0.0.1:$(PORT):8799 \
 		-v $(VOLUME):/data \
 		$(if $(wildcard .env),--env-file .env) \
