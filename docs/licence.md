@@ -4,6 +4,9 @@ Tinker is licensed under the GNU Affero General Public License, version 3 only
 (`AGPL-3.0-only`). The licence text is `upstream/LICENSE`, and the image carries a
 copy at `/usr/share/doc/tinker-web/LICENSE`.
 
+This repository's own files (the Dockerfile, the entrypoint, the Makefile, the
+scripts and these notes) are under the same licence: `LICENSE` at its root.
+
 ## What the image contains
 
 - `tenkts-server` and `tinker-cli`, compiled from the upstream commit pinned in

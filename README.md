@@ -85,4 +85,4 @@ Run `make help` to list project commands. Run `make it_build` to build the image
 
 ## Licence
 
-AGPL-3.0-only, upstream's. See [docs/licence.md](docs/licence.md).
+This repository and the image are AGPL-3.0-only, the same as upstream: see [LICENSE](LICENSE). What the image contains and where its source is: [docs/licence.md](docs/licence.md).
