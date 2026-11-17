@@ -1,0 +1,4 @@
+[submodule "upstream"]
+	path = upstream
+	url = https://github.com/tinker-click/tinker-click.git
+	branch = main

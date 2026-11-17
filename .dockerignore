@@ -1,0 +1,11 @@
+# Only upstream's sources and the entrypoint reach the build.
+*
+!docker/entrypoint.sh
+!upstream/
+upstream/.git
+upstream/target
+upstream/android
+upstream/ios
+upstream/eval-out
+upstream/web-demo-data
+upstream/data
