@@ -46,6 +46,13 @@ _Nothing here. S12 runs the image from AI-UI's folder._
   - [ ] [WE] Review upstream's new commits; then `make upstream_update`, `make it_build` and the gates in `AGENTS.md`
   - [ ] [WE] When Tinker moves to `master`: `git config -f .gitmodules submodule.upstream.branch master`, one commit
 
+- [ ] **DRY/KISS pass** from the 2026-11-17 audit: one source per fact, fewer checks #housekeeping
+  - [ ] [WE] Labels read both source URLs from git (`.gitmodules`, `remote.origin.url`); one `BUILD_ARGS` for both build targets
+  - [ ] [WE] `require_upstream` fails when the README lacks a `"TENKTS_*"` name upstream reads; add `TENKTS_SERVER_SECRET_FILE`
+  - [ ] [WE] Cut `docs/running.md`'s copies of the README's run line, localhost note, invite command and model section
+  - [ ] [WE] One upstream check instead of two: `git submodule status` with `--init` in the hint
+  - [ ] [WE] The push target calls `make verify_image` instead of repeating the manifest list
+
 - [ ] **TodoScope alignment**: check the board against this file #housekeeping
   - [ ] [MANUALLY] Scan this repo in TodoScope; confirm the columns match
   - [ ] [WE] Review `.todoscope-exclude.csv` (excludes `upstream/`)
