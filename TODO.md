@@ -24,7 +24,7 @@ Plan: `~/.claude/plans/precious-strolling-puzzle.md` (sessions S11 and S13).
   - [x] [WE] `make minor_release`, then `make release_finish` (2026-11-18: `v0.1.0` on `296eb2f`)
   - [x] [WE] `sage-runtime build-vm`, then the push: index `sha256:393c3761`, amd64 and arm64, on `0.1.0` and `:latest`
   - [ ] [MANUALLY] Set the GHCR package `tinker-web` public (it reads `internal`); then [WE] `make verify_image`
-  - [ ] [WE] The tap's `tinker-web` formula pins image `0.1.0`
+  - [x] [WE] The tap's `tinker-web` formula pins image `0.1.0` (tag `tinker-web-v0.1.0`; the Studio runs it from brew)
 
 ## Bugs
 
