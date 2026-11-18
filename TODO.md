@@ -20,22 +20,28 @@ Plan: `~/.claude/plans/precious-strolling-puzzle.md` (sessions S11 and S13).
 
 ## In Progress
 
-_Nothing here. S12 runs the image from AI-UI's folder._
+- [ ] **First release, v0.1.0, on GHCR (S13)**: both architectures, version tag and `:latest`, package public #release
+  - [x] [WE] `make minor_release`, then `make release_finish` (2026-11-18: `v0.1.0` on `296eb2f`)
+  - [x] [WE] `sage-runtime build-vm`, then the push: index `sha256:393c3761`, amd64 and arm64, on `0.1.0` and `:latest`
+  - [ ] [MANUALLY] Set the GHCR package `tinker-web` public (it reads `internal`); then [WE] `make verify_image`
+  - [ ] [WE] The tap's `tinker-web` formula pins image `0.1.0`
+
+## Bugs
+
+- [ ] **The release push builds amd64 under QEMU, and rustc dies there** (SIGSEGV, 2026-11-18) #release
+  - [ ] [WE] `ensure_builder` makes a `docker-container` builder; its buildkit misses Rosetta and wraps amd64 steps in its own QEMU
+  - [x] [WE] Workaround for v0.1.0: the same `buildx build` line with `--builder colima-build`, the engine's builder, which runs amd64 through Rosetta
+  - [ ] [WE] Fix: on `colima-build`, use the engine's builder (containerd store); then tell Trellis and AI-UI, whose copies run amd64 under QEMU too
+- [x] **`make verify_image` died with 127**: `scripts/lib/gate.sh` was never copied from AI-UI; now it is #release
 
 ## TODO
-
-- [ ] **First release, v0.1.0, on GHCR (S13)**: both architectures, version tag and `:latest`, package public #release
-  - [ ] [WE] `make minor_release`, then `make release_finish`
-  - [ ] [MANUALLY] `sage-runtime build-vm`, then `DOCKER_CONTEXT=colima-build make it_build_multi_arch_push_GHCR`
-  - [ ] [MANUALLY] Set the GHCR package `tinker-web` public; then [WE] `make verify_image`
-  - [ ] [WE] The tap's `tinker-web` formula pins image `0.1.0`
 
 ## Backlog
 
 - [ ] **Make Sage-is/tinker-web public** (Alexander) #licence
   - [x] README, `docs/licence.md` and root `LICENSE` (AGPL-3.0-only) in place
   - [ ] [MANUALLY] Read the README and `docs/licence.md` as a newcomer
-  - [ ] [MANUALLY] `gh repo edit Sage-is/tinker-web --visibility public --accept-visibility-change-consequences`
+  - [x] [WE] `gh repo edit Sage-is/tinker-web --visibility public --accept-visibility-change-consequences` (2026-11-18, on Alexander's go, before his read)
 
 - [ ] **Offer the Dockerfile upstream** after Tuesday, by pull request to tinker-click/tinker-click #upstream
   - [ ] [WE] Copy `docker/`, with the `upstream/` paths in its `COPY` lines turned into `.`
